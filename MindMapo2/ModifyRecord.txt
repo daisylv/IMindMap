@@ -1,0 +1,43 @@
+2013-5-22
+
+MyMapView:
+refreshCurve(int)
+line 251: p -> pc
+line 213:modify addShape(){}
+add:
+ line 499~:  editText();
+ line 88: mPaint;
+ line 91: if(){};
+ line 134: if(){};
+
+
+MyShape:
+addline 20: public String text = null;
+	19: public Point tp = new Point();;//for draw text
+	public int tsize = 0;
+
+Rename LongShape.java to LongTextShape.java
+
+value/string:
+add: String(Text text)
+
+activity_main.xml:
+add button: text, textShape
+
+MainActivity.java:
+add:
+ line 40:
+ public Button textBtn;
+ line 41:
+ public Button textShapeBtn;
+ line 68:
+ textBtn = (Button)findViewById(R.id.text);
+ line 69:
+ textShapeBtn = (Button)findViewById(R.id.textShape);
+ line 129:
+ function: textBtn.setOnClickListener
+ line 140:
+ function: textShapeBtn.setOnClickListener(new OnClickListener()
+ line 437:
+ function: setText(){}
+

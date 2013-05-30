@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MindMap</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Exit</string>
+    <string name="Oval">iOval</string>
+    <string name="Rect">iRect</string>
+    <string name="edit">editShape</string>
+    <string name="Curve">curve</string>
+    <string name="Remove">remove</string>
+    <string name="Color">color</string>
+    <string name="Text">text</string>
+    <string name="TextShape">textShape</string>
+
+</resources>

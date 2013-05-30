@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainlayout"
+    android:layout_width="300sp"
+    android:layout_height="wrap_content"
+    android:background="#00000000" 
+    >
+
+	<GridView
+	    android:id="@+id/GridView_toolbar"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:gravity="center"
+	    android:numColumns="3" 
+	    android:horizontalSpacing="10dp"
+	    android:verticalSpacing="10dp"
+	    android:paddingTop="15dp"
+	    android:paddingBottom="10dp"
+	    android:listSelector="#01060012"
+	    >
+	</GridView>
+	
+</FrameLayout>
