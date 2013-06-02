@@ -135,7 +135,7 @@ public class MyMapView extends View {
 					//canvas.drawOval(((OvalShape)curShape).r, mPaint);
 				}
 				
-				if(((OvalShape)curShape).LongShapeList!=null)
+				if(((OvalShape)curShape).LongShapeList.size()>0)
 					
 				{
 
@@ -310,7 +310,7 @@ public class MyMapView extends View {
 				}
 				*/
 				
-				if(((RectShape)curShape).LongShapeList!=null)
+				if(((RectShape)curShape).LongShapeList.size() > 0)
 					
 				{
 					int pos = ((RectShape)curShape).LongShapeList.get(0).isleft;

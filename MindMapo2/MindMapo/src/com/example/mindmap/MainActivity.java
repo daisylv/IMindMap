@@ -348,36 +348,38 @@ public class MainActivity extends Activity implements ColorItem {
 				});
 			}
 
-			if (btnName.equals("textBtn")) {
-
-				holder.viewBtn.setOnClickListener(new View.OnClickListener() {
+			if (btnName.equals("TShapeBtn")) {
+				if(theView.curEdit >= 0){
+					holder.viewBtn.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
 						setText();
-						theView.invalidate();
 						sld.animateClose();
+						theView.invalidate();
 					}
 				});
+				}
 			}
 			
-			if (btnName.equals("RShapeBtn")) {
-
-				holder.viewBtn.setOnClickListener(new View.OnClickListener() {
+			if (btnName.equals("RTBtn")) {
+				if(theView.curEdit >= 0){
+					holder.viewBtn.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
 						shapeType = MyMapView.shapeEnum.RLong;
 						theView.addShape(null, shapeType);
 						setlongText();
-						theView.invalidate();
 						sld.animateClose();
+						theView.invalidate();
 					}
 				});
+				}
 			}
 
-			if (btnName.equals("LShapeBtn")) {
-
+			if (btnName.equals("LTBtn")) {
+				if(theView.curEdit >= 0){
 				holder.viewBtn.setOnClickListener(new View.OnClickListener() {
 
 					@Override
@@ -385,10 +387,12 @@ public class MainActivity extends Activity implements ColorItem {
 						shapeType = MyMapView.shapeEnum.LLong;
 						theView.addShape(null, shapeType);
 						setlongText();
-						theView.invalidate();
 						sld.animateClose();
+
+						theView.invalidate();
 					}
 				});
+				}
 			}
 			
 			return convertView;
@@ -645,6 +649,8 @@ public class MainActivity extends Activity implements ColorItem {
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
 				theView.editText(editt.getText().toString());
+
+				theView.invalidate();
 			}
 		});
 		builder.setNegativeButton("Cancel", null);
@@ -663,6 +669,8 @@ public class MainActivity extends Activity implements ColorItem {
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
 				theView.editlongText(editt.getText().toString());
+
+				theView.invalidate();
 			}
 		});
 		builder.setNegativeButton("Cancel", null);
