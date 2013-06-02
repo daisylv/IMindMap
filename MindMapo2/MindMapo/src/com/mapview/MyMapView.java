@@ -22,7 +22,7 @@ public class MyMapView extends View {
 	
 	private static List<MyShape> shapelist = new ArrayList<MyShape>();//维护一个全局list，存放已画的图形
 	private static List<Beziercurve>curvelist = new ArrayList<Beziercurve>();//维护一个存放路径的List
-	public static enum shapeEnum{iOval, iRect, iLong};//三种图形选项
+	public static enum shapeEnum{iOval, iRect, RLong, LLong};//四种图形选项
 	public int curEdit = -1;
 	public float canvasscale=1;//画布的比例 初始为1
 	public Point CanvasP=new Point(0,0); //画布的原点 初始为（0,0）
@@ -112,9 +112,7 @@ public class MyMapView extends View {
 				}
 				Log.d("event", "true0");
 				
-				
-				//单
-				
+			
 				//判断是否选中 并画虚线
 				if(((OvalShape)curShape).editstate)
 				{
@@ -140,89 +138,91 @@ public class MyMapView extends View {
 				if(((OvalShape)curShape).LongShapeList!=null)
 					
 				{
-				int size = ((OvalShape)curShape).LongShapeList.size();
-				if(size>0)
-				{
-				mPaint.setColor(Color.BLUE);
-				canvas.drawLine(((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth/2, ((OvalShape)curShape).sp.y, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth, ((OvalShape)curShape).sp.y, mPaint);
-				//canvas.
-				if(size==1)
-				{
-					if(((OvalShape)curShape).LongShapeList.get(0).text!=null)
+
+					int pos = ((OvalShape)curShape).LongShapeList.get(0).isleft;
+					int size = ((OvalShape)curShape).LongShapeList.size();
+					if(size>0)
 					{
-						tPaint.setTextSize(20);
-						tPaint.setUnderlineText(true);
-						canvas.drawLine(((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth+5 , ((OvalShape)curShape).sp.y, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth + 15, ((OvalShape)curShape).sp.y, linePaint);
-						canvas.drawText(((OvalShape)curShape).LongShapeList.get(0).text, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth+25,((OvalShape)curShape).sp.y, tPaint);
-					}
-					}
-				if(size==2)
-				{
+						mPaint.setColor(Color.BLUE);
+						canvas.drawLine(((OvalShape)curShape).sp.x+(pos*((OvalShape)curShape).curwidth/2), ((OvalShape)curShape).sp.y, ((OvalShape)curShape).sp.x+pos*(((OvalShape)curShape).curwidth), ((OvalShape)curShape).sp.y, mPaint);
+						//canvas.
+						if(size==1)
+						{
+							if(((OvalShape)curShape).LongShapeList.get(0).text!=null)
+							{
+								tPaint.setTextSize(20);
+								tPaint.setUnderlineText(true);
+								canvas.drawLine(((OvalShape)curShape).sp.x+((((OvalShape)curShape).curwidth+5)*pos) , ((OvalShape)curShape).sp.y, ((OvalShape)curShape).sp.x+(((OvalShape)curShape).curwidth + 15)*pos, ((OvalShape)curShape).sp.y, linePaint);
+								canvas.drawText(((OvalShape)curShape).LongShapeList.get(0).text, ((OvalShape)curShape).sp.x+pos*(((OvalShape)curShape).curwidth+25),((OvalShape)curShape).sp.y, tPaint);
+							}
+						}
+						if(size==2)
+						{
 						//mPaint.setColor(Color.BLUE);
 							//canvas.drawLine(((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth/2, ((OvalShape)curShape).sp.y, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth, ((OvalShape)curShape).sp.y, mPaint);
-					if(((OvalShape)curShape).LongShapeList.get(0).text!=null)
-					{
-						tPaint.setTextSize(20);
-						tPaint.setUnderlineText(true);
+							if(((OvalShape)curShape).LongShapeList.get(0).text!=null)
+							{
+								tPaint.setTextSize(20);
+								tPaint.setUnderlineText(true);
 	//cur					
-					  canvas.drawText(((OvalShape)curShape).LongShapeList.get(0).text, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth+25,((OvalShape)curShape).sp.y-30, tPaint);		
-					  longTextpath.moveTo(((OvalShape)curShape).sp.x + ((OvalShape)curShape).curwidth/2, ((OvalShape)curShape).sp.y);
-					  longTextpath.quadTo(((OvalShape)curShape).sp.x + ((OvalShape)curShape).curwidth+5, ((OvalShape)curShape).sp.y-30, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth + 15, ((OvalShape)curShape).sp.y-30);
-					  canvas.drawPath(longTextpath, linePaint);
-					}
+								canvas.drawText(((OvalShape)curShape).LongShapeList.get(0).text, ((OvalShape)curShape).sp.x+pos*(((OvalShape)curShape).curwidth+25),((OvalShape)curShape).sp.y-30, tPaint);		
+								longTextpath.moveTo(((OvalShape)curShape).sp.x + pos*(((OvalShape)curShape).curwidth/2), ((OvalShape)curShape).sp.y);
+								longTextpath.quadTo(((OvalShape)curShape).sp.x + pos*(((OvalShape)curShape).curwidth+5), ((OvalShape)curShape).sp.y-30, ((OvalShape)curShape).sp.x+ pos*(((OvalShape)curShape).curwidth + 15), ((OvalShape)curShape).sp.y-30);
+								canvas.drawPath(longTextpath, linePaint);
+							}
 					
-					if(((OvalShape)curShape).LongShapeList.get(1).text!=null)//canvas.drawt
-					{
-						tPaint.setTextSize(20);
-						tPaint.setUnderlineText(true);
+							if(((OvalShape)curShape).LongShapeList.get(1).text!=null)//canvas.drawt
+							{
+								tPaint.setTextSize(20);
+								tPaint.setUnderlineText(true);
 						
-						longTextpath.moveTo(((OvalShape)curShape).sp.x + ((OvalShape)curShape).curwidth/2, ((OvalShape)curShape).sp.y);
-						  longTextpath.quadTo(((OvalShape)curShape).sp.x + ((OvalShape)curShape).curwidth+5, ((OvalShape)curShape).sp.y+30, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth + 15, ((OvalShape)curShape).sp.y+30);
-						  canvas.drawPath(longTextpath, linePaint);
-						canvas.drawText(((OvalShape)curShape).LongShapeList.get(1).text, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth+25,((OvalShape)curShape).sp.y+30, tPaint);		
-					}
+								longTextpath.moveTo(((OvalShape)curShape).sp.x + pos*(((OvalShape)curShape).curwidth/2), ((OvalShape)curShape).sp.y);
+								longTextpath.quadTo(((OvalShape)curShape).sp.x + pos*(((OvalShape)curShape).curwidth+5), ((OvalShape)curShape).sp.y+30, ((OvalShape)curShape).sp.x+pos*(((OvalShape)curShape).curwidth + 15), ((OvalShape)curShape).sp.y+30);
+								canvas.drawPath(longTextpath, linePaint);
+								canvas.drawText(((OvalShape)curShape).LongShapeList.get(1).text, ((OvalShape)curShape).sp.x+pos*(((OvalShape)curShape).curwidth+25),((OvalShape)curShape).sp.y+30, tPaint);		
+							}
 								 //canvas.drawText
 							
 						
 					
-				}
-				if(size==3)
-				{
-					if(((OvalShape)curShape).LongShapeList.get(0).text!=null)
-					{
-						tPaint.setTextSize(20);
-						tPaint.setUnderlineText(true);
-//cur						
-					canvas.drawText(((OvalShape)curShape).LongShapeList.get(0).text, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth+25,((OvalShape)curShape).sp.y-40, tPaint);
-					longTextpath.moveTo(((OvalShape)curShape).sp.x + ((OvalShape)curShape).curwidth/2, ((OvalShape)curShape).sp.y);
-					  longTextpath.quadTo(((OvalShape)curShape).sp.x + ((OvalShape)curShape).curwidth+5, ((OvalShape)curShape).sp.y-30, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth + 15, ((OvalShape)curShape).sp.y-30);
-					  canvas.drawPath(longTextpath, linePaint);
-					}
-					
-					if(((OvalShape)curShape).LongShapeList.get(1).text!=null)
-					{
-						
-						tPaint.setTextSize(20);
-						tPaint.setUnderlineText(true);
-						canvas.drawLine(((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth+5 , ((OvalShape)curShape).sp.y, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth + 15, ((OvalShape)curShape).sp.y, linePaint);
-
-						canvas.drawText(((OvalShape)curShape).LongShapeList.get(1).text, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth+25,((OvalShape)curShape).sp.y, tPaint);
-					}
-						
-					
-					if(((OvalShape)curShape).LongShapeList.get(2).text!=null)
+						}
+						if(size==3)
 						{
-						tPaint.setTextSize(20);
-						tPaint.setUnderlineText(true);
+							if(((OvalShape)curShape).LongShapeList.get(0).text!=null)
+							{
+								tPaint.setTextSize(20);
+								tPaint.setUnderlineText(true);
+//cur						
+								canvas.drawText(((OvalShape)curShape).LongShapeList.get(0).text, ((OvalShape)curShape).sp.x+(pos*((OvalShape)curShape).curwidth+25),((OvalShape)curShape).sp.y-40, tPaint);
+								longTextpath.moveTo(((OvalShape)curShape).sp.x + pos*(((OvalShape)curShape).curwidth/2), ((OvalShape)curShape).sp.y);
+								longTextpath.quadTo(((OvalShape)curShape).sp.x + pos*(((OvalShape)curShape).curwidth+5), ((OvalShape)curShape).sp.y-30, ((OvalShape)curShape).sp.x+pos*(((OvalShape)curShape).curwidth + 15), ((OvalShape)curShape).sp.y-30);
+								canvas.drawPath(longTextpath, linePaint);
+							}
+					
+							if(((OvalShape)curShape).LongShapeList.get(1).text!=null)
+							{
+						
+								tPaint.setTextSize(20);
+								tPaint.setUnderlineText(true);
+								canvas.drawLine(((OvalShape)curShape).sp.x+pos*(((OvalShape)curShape).curwidth+5) , ((OvalShape)curShape).sp.y, ((OvalShape)curShape).sp.x+pos*(((OvalShape)curShape).curwidth + 15), ((OvalShape)curShape).sp.y, linePaint);
+
+								canvas.drawText(((OvalShape)curShape).LongShapeList.get(1).text, ((OvalShape)curShape).sp.x+pos*(((OvalShape)curShape).curwidth+25),((OvalShape)curShape).sp.y, tPaint);
+							}
+							
+					
+							if(((OvalShape)curShape).LongShapeList.get(2).text!=null)
+							{
+								tPaint.setTextSize(20);
+								tPaint.setUnderlineText(true);
 	//cur				
-						longTextpath.moveTo(((OvalShape)curShape).sp.x + ((OvalShape)curShape).curwidth/2, ((OvalShape)curShape).sp.y);
-						  longTextpath.quadTo(((OvalShape)curShape).sp.x + ((OvalShape)curShape).curwidth+5, ((OvalShape)curShape).sp.y-30, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth + 15, ((OvalShape)curShape).sp.y-30);
-						  canvas.drawPath(longTextpath, linePaint);	
+								longTextpath.moveTo(((OvalShape)curShape).sp.x + pos*(((OvalShape)curShape).curwidth/2), ((OvalShape)curShape).sp.y);
+								longTextpath.quadTo(((OvalShape)curShape).sp.x + pos*(((OvalShape)curShape).curwidth+5), ((OvalShape)curShape).sp.y-30, ((OvalShape)curShape).sp.x+pos*(((OvalShape)curShape).curwidth + 15), ((OvalShape)curShape).sp.y-30);
+								canvas.drawPath(longTextpath, linePaint);	
 						  
-						canvas.drawText(((OvalShape)curShape).LongShapeList.get(2).text, ((OvalShape)curShape).sp.x+((OvalShape)curShape).curwidth+25,((OvalShape)curShape).sp.y+40, tPaint);
+								canvas.drawText(((OvalShape)curShape).LongShapeList.get(2).text, ((OvalShape)curShape).sp.x+pos*(((OvalShape)curShape).curwidth+25),((OvalShape)curShape).sp.y+40, tPaint);
+							}
 						}
-						}
-				}
+					}
 				}
 				/*
 				if(((OvalShape)curShape).LongShapeList.get()!=null )
@@ -313,20 +313,22 @@ public class MyMapView extends View {
 				if(((RectShape)curShape).LongShapeList!=null)
 					
 				{
+					int pos = ((RectShape)curShape).LongShapeList.get(0).isleft;
+					
 					int size = ((RectShape)curShape).LongShapeList.size();
 					if(size>0)
 					{
 						mPaint.setColor(Color.BLUE);
-						canvas.drawLine(((RectShape)curShape).sp.x+((RectShape)curShape).curwidth/2, ((RectShape)curShape).sp.y, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth, ((RectShape)curShape).sp.y, mPaint);
+						canvas.drawLine(((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth/2), ((RectShape)curShape).sp.y, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth), ((RectShape)curShape).sp.y, mPaint);
 						if(size==1)
 						{
 							if(((RectShape)curShape).LongShapeList.get(0).text!=null)
 							{
 								tPaint.setTextSize(20);
 								tPaint.setUnderlineText(true);
-								canvas.drawLine(((RectShape)curShape).sp.x+((RectShape)curShape).curwidth+5 , ((RectShape)curShape).sp.y, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth + 15, ((RectShape)curShape).sp.y, linePaint);
+								canvas.drawLine(((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth+5) , ((RectShape)curShape).sp.y, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth + 15), ((RectShape)curShape).sp.y, linePaint);
 
-								canvas.drawText(((RectShape)curShape).LongShapeList.get(0).text, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth+25,((RectShape)curShape).sp.y, tPaint);
+								canvas.drawText(((RectShape)curShape).LongShapeList.get(0).text, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth+25),((RectShape)curShape).sp.y, tPaint);
 							}
 						}
 						if(size==2)
@@ -337,20 +339,20 @@ public class MyMapView extends View {
 							{
 								tPaint.setTextSize(20);
 								tPaint.setUnderlineText(true);
-								longTextpath.moveTo(((RectShape)curShape).sp.x + ((RectShape)curShape).curwidth/2, ((RectShape)curShape).sp.y);
-								longTextpath.quadTo(((RectShape)curShape).sp.x + ((RectShape)curShape).curwidth+5, ((RectShape)curShape).sp.y-30, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth + 15, ((RectShape)curShape).sp.y-30);
+								longTextpath.moveTo(((RectShape)curShape).sp.x + pos*(((RectShape)curShape).curwidth/2), ((RectShape)curShape).sp.y);
+								longTextpath.quadTo(((RectShape)curShape).sp.x + pos*(((RectShape)curShape).curwidth+5), ((RectShape)curShape).sp.y-30, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth + 15), ((RectShape)curShape).sp.y-30);
 								canvas.drawPath(longTextpath, linePaint);
-								canvas.drawText(((RectShape)curShape).LongShapeList.get(0).text, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth+25,((RectShape)curShape).sp.y-30, tPaint);		
+								canvas.drawText(((RectShape)curShape).LongShapeList.get(0).text, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth+25),((RectShape)curShape).sp.y-30, tPaint);		
 							}
 					
 							if(((RectShape)curShape).LongShapeList.get(1).text!=null)//canvas.drawt
 							{
 								tPaint.setTextSize(20);
 								tPaint.setUnderlineText(true);
-								longTextpath.moveTo(((RectShape)curShape).sp.x + ((RectShape)curShape).curwidth/2, ((RectShape)curShape).sp.y);
-								  longTextpath.quadTo(((RectShape)curShape).sp.x + ((RectShape)curShape).curwidth+5, ((RectShape)curShape).sp.y+30, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth + 15, ((RectShape)curShape).sp.y+30);
+								longTextpath.moveTo(((RectShape)curShape).sp.x + pos*(((RectShape)curShape).curwidth/2), ((RectShape)curShape).sp.y);
+								  longTextpath.quadTo(((RectShape)curShape).sp.x + pos*(((RectShape)curShape).curwidth+5), ((RectShape)curShape).sp.y+30, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth + 15), ((RectShape)curShape).sp.y+30);
 								  canvas.drawPath(longTextpath, linePaint);
-								canvas.drawText(((RectShape)curShape).LongShapeList.get(1).text, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth+25,((RectShape)curShape).sp.y+30, tPaint);		
+								canvas.drawText(((RectShape)curShape).LongShapeList.get(1).text, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth+25),((RectShape)curShape).sp.y+30, tPaint);		
 							}
 								 //canvas.drawText
 							
@@ -364,10 +366,10 @@ public class MyMapView extends View {
 							{
 								tPaint.setTextSize(20);
 								tPaint.setUnderlineText(true);
-								longTextpath.moveTo(((RectShape)curShape).sp.x + ((RectShape)curShape).curwidth/2, ((RectShape)curShape).sp.y);
-								longTextpath.quadTo(((RectShape)curShape).sp.x + ((RectShape)curShape).curwidth+5, ((RectShape)curShape).sp.y-30, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth + 15, ((RectShape)curShape).sp.y-30);
+								longTextpath.moveTo(((RectShape)curShape).sp.x + pos*(((RectShape)curShape).curwidth/2), ((RectShape)curShape).sp.y);
+								longTextpath.quadTo(((RectShape)curShape).sp.x + pos*(((RectShape)curShape).curwidth+5), ((RectShape)curShape).sp.y-30, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth + 15), ((RectShape)curShape).sp.y-30);
 								canvas.drawPath(longTextpath, linePaint);
-								canvas.drawText(((RectShape)curShape).LongShapeList.get(0).text, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth+25,((RectShape)curShape).sp.y-40, tPaint);
+								canvas.drawText(((RectShape)curShape).LongShapeList.get(0).text, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth+25),((RectShape)curShape).sp.y-40, tPaint);
 							}
 					
 							if(((RectShape)curShape).LongShapeList.get(1).text!=null)
@@ -375,8 +377,8 @@ public class MyMapView extends View {
 						
 								tPaint.setTextSize(20);
 								tPaint.setUnderlineText(true);
-								canvas.drawLine(((RectShape)curShape).sp.x+((RectShape)curShape).curwidth+5 , ((RectShape)curShape).sp.y, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth + 15, ((RectShape)curShape).sp.y, linePaint);
-								canvas.drawText(((RectShape)curShape).LongShapeList.get(1).text, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth+25,((RectShape)curShape).sp.y, tPaint);
+								canvas.drawLine(((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth+5) , ((RectShape)curShape).sp.y, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth + 15), ((RectShape)curShape).sp.y, linePaint);
+								canvas.drawText(((RectShape)curShape).LongShapeList.get(1).text, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth+25),((RectShape)curShape).sp.y, tPaint);
 							}
 						
 					
@@ -384,20 +386,21 @@ public class MyMapView extends View {
 							{
 								tPaint.setTextSize(20);
 								tPaint.setUnderlineText(true);
-								longTextpath.moveTo(((RectShape)curShape).sp.x + ((RectShape)curShape).curwidth/2, ((RectShape)curShape).sp.y);
-								  longTextpath.quadTo(((RectShape)curShape).sp.x + ((RectShape)curShape).curwidth+5, ((RectShape)curShape).sp.y+30, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth + 15, ((RectShape)curShape).sp.y+30);
+								longTextpath.moveTo(((RectShape)curShape).sp.x + pos*(((RectShape)curShape).curwidth/2), ((RectShape)curShape).sp.y);
+								  longTextpath.quadTo(((RectShape)curShape).sp.x + pos*(((RectShape)curShape).curwidth+5), ((RectShape)curShape).sp.y+30, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth + 15), ((RectShape)curShape).sp.y+30);
 								  canvas.drawPath(longTextpath, linePaint);
-								canvas.drawText(((RectShape)curShape).LongShapeList.get(2).text, ((RectShape)curShape).sp.x+((RectShape)curShape).curwidth+25,((RectShape)curShape).sp.y+40, tPaint);
+								canvas.drawText(((RectShape)curShape).LongShapeList.get(2).text, ((RectShape)curShape).sp.x+pos*(((RectShape)curShape).curwidth+25),((RectShape)curShape).sp.y+40, tPaint);
 							}
 						}
 					}	
 				}
 				
 				}
-			if(curShape.shape == shapeEnum.iLong)
+			if(curShape.shape == shapeEnum.RLong || curShape.shape == shapeEnum.LLong)
 			{
 				mPaint.setColor(Color.BLUE);
-				canvas.drawLine(((LongTextShape)curShape).sp.x+((LongTextShape)curShape).curwidth/2, ((LongTextShape)curShape).sp.y, ((LongTextShape)curShape).sp.x+((LongTextShape)curShape).curwidth, ((LongTextShape)curShape).sp.y, mPaint);
+				int pos = ((LongTextShape)curShape).isleft;
+				canvas.drawLine(((LongTextShape)curShape).sp.x+pos*(((LongTextShape)curShape).curwidth/2), ((LongTextShape)curShape).sp.y, ((LongTextShape)curShape).sp.x+pos*(((LongTextShape)curShape).curwidth), ((LongTextShape)curShape).sp.y, mPaint);
 				if(curShape.text != null)
 				{
 					//canvas.drawt
@@ -449,16 +452,19 @@ public class MyMapView extends View {
 	//添加图形
 	public void addShape(Point p, shapeEnum e)
 	{
-		if(p == null && e == shapeEnum.iLong)
+		if(p == null && (e == shapeEnum.RLong || e == shapeEnum.LLong))
 		{
 			Point pp = shapelist.get(curEdit).sp;
 //			Point cur = new Point(pp.x)
 			MyShape textShape = new LongTextShape(pp, e);
-			
+			if(e == shapeEnum.RLong)
+				((LongTextShape)textShape).isleft = 1;
+			if(e == shapeEnum.LLong)
+				((LongTextShape)textShape).isleft = -1;
 			 if(shapelist.get(curEdit).LongShapeList.size()<3)
-			{
+			 {
 				shapelist.get(curEdit).LongShapeList.add((LongTextShape) textShape);
-			}
+			 }
 			
 			//LongShapeList
 			//shapelist.get(curEdit).manageShape=(LongTextShape) textShape;
@@ -476,7 +482,9 @@ public class MyMapView extends View {
 				case iRect:
 					shapelist.add(new RectShape(cuP, e));
 					break;
-				case iLong:
+				case RLong:
+					break;
+				case LLong:
 					break;
 			}
 			

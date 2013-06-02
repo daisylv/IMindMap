@@ -8,6 +8,7 @@ import com.mapview.MyMapView.shapeEnum;
 public class LongTextShape extends MyShape {
 
 	public MyShape parentShape = null;
+	public int isleft = 0;
 	
 	public LongTextShape(Point p, shapeEnum e) {
 		super(p, e);

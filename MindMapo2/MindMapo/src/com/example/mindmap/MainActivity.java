@@ -53,8 +53,9 @@ public class MainActivity extends Activity implements ColorItem {
 	public Button rectBtn;
 	public Button editBtn;
 	public Button colorBtn;// 选中状态下编辑颜色
-	public Button textBtn;
-	public Button textShapeBtn;
+	public Button textBtn;//给椭圆什么的加字
+	public Button RShapeBtn;
+	public Button LShapeBtn;
 
 	public enum stateEnum {
 		locked, addShape, editShape, addCurve, remove
@@ -159,14 +160,20 @@ public class MainActivity extends Activity implements ColorItem {
 		list.add(map);
 
 		map = new HashMap<String, Object>();
-		map.put("title", "textBtn");
-		map.put("info", "textBtn");
+		map.put("title", "RTBtn");
+		map.put("info", "RTBtn");
+		map.put("img", R.drawable.i2);
+		list.add(map);
+		
+		map = new HashMap<String, Object>();
+		map.put("title", "LTBtn");
+		map.put("info", "LTBtn");
 		map.put("img", R.drawable.i2);
 		list.add(map);
 
 		map = new HashMap<String, Object>();
-		map.put("title", "textShapeBtn");
-		map.put("info", "textShapeBtn");
+		map.put("title", "TShapeBtn");
+		map.put("info", "TShapeBtn");
 		map.put("img", R.drawable.i3);
 		list.add(map);
 
@@ -353,14 +360,14 @@ public class MainActivity extends Activity implements ColorItem {
 					}
 				});
 			}
-
-			if (btnName.equals("textShapeBtn")) {
+			
+			if (btnName.equals("RShapeBtn")) {
 
 				holder.viewBtn.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						shapeType = MyMapView.shapeEnum.iLong;
+						shapeType = MyMapView.shapeEnum.RLong;
 						theView.addShape(null, shapeType);
 						setlongText();
 						theView.invalidate();
@@ -369,7 +376,23 @@ public class MainActivity extends Activity implements ColorItem {
 				});
 			}
 
+			if (btnName.equals("LShapeBtn")) {
+
+				holder.viewBtn.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						shapeType = MyMapView.shapeEnum.LLong;
+						theView.addShape(null, shapeType);
+						setlongText();
+						theView.invalidate();
+						sld.animateClose();
+					}
+				});
+			}
+			
 			return convertView;
+			
 		}
 
 	}
@@ -611,6 +634,7 @@ public class MainActivity extends Activity implements ColorItem {
 	}
 
 	public void setText() {
+		
 		Builder builder = new AlertDialog.Builder(thecontext);
 		builder.setTitle("TextInput");
 		final EditText editt = new EditText(thecontext);
