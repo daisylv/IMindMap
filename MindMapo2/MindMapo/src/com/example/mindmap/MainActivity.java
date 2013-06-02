@@ -92,6 +92,7 @@ public class MainActivity extends Activity implements ColorItem {
 		sld = (SlidingDrawer)findViewById(R.id.slidingdrawer);
 
 		layout.addView(theView);
+		sld.bringToFront();
 		//layout.addView(sld);
 	}
 
